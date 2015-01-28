@@ -1,0 +1,69 @@
+  static class IPAddValidation{
+        public void run() throws IOException{
+            int n;
+            String text;
+            String ip4Regex = "((((\\b\\d\\b)|(\\b[1-9]\\d\\b)|(\\b1\\d\\d\\b)|"
+                    + "(\\b2[0-5]{2}\\b))\\.){3})"+
+                    "((\\b\\d\\b)|(\\b[1-9]\\d\\b)|(\\b1\\d\\d\\b)|"
+                    + "(\\b2[0-5][0-5]\\b))";
+            String ip6Regex = "((\\b[0-9a-fA-F]{1,4}\\b\\:){7})"+
+                    "\\b[0-9a-fA-F]{1,4}\\b";
+            Matcher ip4matcher,ip6matcher;           
+           
+            n = Integer.parseInt(nextToken());
+            while(n-- != 0){
+                text = br.readLine();
+                
+                ip6matcher = Pattern.compile(ip6Regex).matcher(text);
+                ip4matcher = Pattern.compile(ip4Regex).matcher(text);
+                
+                if(ip4matcher.find()) pw.write("IPv4\n");
+                else if(ip6matcher.find()) pw.write("IPv6\n");
+                else pw.write("Neither\n");
+                pw.flush();
+            }//end while
+        }//end run
+    }//end inner class IPAddValidation
+    
+    static class StyleOfSpelling{
+        public void run() throws IOException{
+            String text="";
+            String engine;
+            int n,t;
+            
+            n = Integer.parseInt(nextToken());
+            while(n-- != 0){
+                text += " "+br.readLine();
+            }//end while
+            t = Integer.parseInt(nextToken());
+            while(t-- != 0){
+                engine = br.readLine();
+                engine = engine.substring(0,engine.length()-2)+"[zs]e";
+                //System.out.println(engine);
+                Matcher matcher = Pattern.compile(engine).matcher(text);
+                int c=0;
+                while(matcher.find()){
+                    c++;
+                }//end while
+                
+                pw.write(c+"\n");
+                pw.flush();
+            }//end while
+        }//end run
+    }//end class
+    
+    static class SayingHi{
+        public void run() throws IOException{
+            int n;
+            String regexp = "^([Hh][Ii] )[^Dd]";
+            n = Integer.parseInt(nextToken());
+            while(n-- != 0){
+                String text = br.readLine();
+                Matcher m = Pattern.compile(regexp).matcher(text);
+                if(m.find()){
+                    pw.write(text+"\n");
+                    pw.flush();
+                }
+            }//end while
+        }
+    }

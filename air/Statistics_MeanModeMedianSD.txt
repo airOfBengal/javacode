@@ -1,0 +1,58 @@
+  static class Statistics{
+        public void run() throws IOException{
+            int n;
+            Integer[] v;
+            Map<Integer,Integer> map = new TreeMap<Integer,Integer>();
+            double sum = 0.0,mean;
+            
+            n = Integer.parseInt(nextToken());
+            v = new Integer[n];
+            for(int i=0;i<n;i++){
+                v[i] = Integer.parseInt(nextToken());
+                sum += v[i];
+                if(!map.containsKey(v[i])) {
+                    map.put(v[i],1);
+                }else{
+                    map.put(v[i],map.get(v[i])+1);
+                }
+            }//end for
+            mean = sum/n;
+            
+            Arrays.sort(v);            
+            double median;
+            if(n%2 == 0)
+                median = (v[n/2]+v[n/2 - 1])/2.0;
+            else median = v[n/2];
+            
+            Integer mode=0;            
+            if(map.size() == n){
+                mode = v[0];//(Integer) map.keySet().toArray()[0];
+            }else{
+                Iterator<Integer> iterator = map.keySet().iterator();
+                Integer max = 0;
+                while(iterator.hasNext()){
+                    Integer key = iterator.next();
+                    Integer value = map.get(key);
+                    if(value>max){ max = value;
+                        mode = key;
+                    }//end if
+                }//end while                
+            }//end if-else
+            
+            //sd
+            double sd = 0.0;
+            for(int i=0;i<n;i++){
+                sd += (v[i]-mean)*(v[i]-mean);
+            } 
+            //double s = Math.sqrt(sd/(n-1));
+            sd = Math.sqrt(sd/n);
+            
+            double l,r;      
+            l = (mean - (1.96*sd)/Math.sqrt(n));
+            r = (mean + (1.96*sd)/Math.sqrt(n));
+            
+            pw.printf("%.1f\n%.1f\n%d\n%.1f\n%.1f %.1f\n",mean,median,mode,sd,l,r);
+                    
+            pw.flush();
+        }//end run
+    }//end class Statistics
